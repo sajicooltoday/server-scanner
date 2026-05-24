@@ -1,6 +1,21 @@
-# Title
+# Server Scanner
 
-Description
+Scans the game to recreate the server hierarchy of the roblox game via methods and recreates the hierarchy with Instance new so you can view the found stuff in any explorer or log to a file.
+
+Will be reused and improved for [Onyx](https://github.com/sajicooltoday/onyx-suite)!
+
+- Minimalistic cli window ui
+- Optimized & speedy
+  - optimized as much as it can but a bad device will probably cause problems
+  - usually fast process for good devices (can take a while, thats why file logging exists)
+- File logging (.txt)
+- Methods
+  - methods can be easily plugged in & out for modification
+  - guide to implement your own methods exists inside the source code above the methods table
+  - moduleScan: scans every module script in the game to find server referecens (such as game.ServerScriptService.GameHandler)
+
+> [!WARNING]
+> This will not, and can not give you the source code or bytecode of the scanned scripts or modulescripts due to filtering enabled. However you can recreate the scripts source with a decent accuracy by using AI, this will be implemented in [Onyx](https://github.com/sajicooltoday/onyx-suite).
 
 ## Prerequisites
 
@@ -19,4 +34,4 @@ To bundle all the scripts, you have to follow these steps:
 3. Run `rokit install` and wait for it to install all the dependencies
 4. In VSCode, press CTRL + SHIFT + B to build or run this command `lune run Build bundle header=Build/Header.luau`
 
-You can find the bundled script in '/Distribution/Script.luau'. If any issues occur or you are having troubles with the steps [contact ActualMasterOogway on discord](https://discord.com/users/820039511236411463) or [open a Issue on this repository](https://github.com/user/repo/issues).
+You can find the bundled script in '/Distribution/Script.luau'. If any issues occur or you are having troubles with the steps [open a Issue on this repository](https://github.com/user/repo/issues).

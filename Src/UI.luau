@@ -2,13 +2,120 @@ local UI = {}
 
 local utils = require(script.Parent.Utils)
 local defaultFont = 12187365364
+local defaultTween = TweenInfo.new(0.25, Enum.EasingStyle.Exponential)
+local menuTween = TweenInfo.new(0.5, Enum.EasingStyle.Exponential)
+
+local gui = nil
 
 local function getFont(weight: Enum.FontWeight)
 	return Font.fromId(defaultFont, weight, Enum.FontStyle.Normal)
 end
 
+local function dragify(frame: Frame)
+	local dragToggle = nil
+	local dragSpeed = 0.25
+	local dragStart = nil
+	local startPos = nil
+
+	local function updateInput(input)
+		local delta = input.Position - dragStart
+		local position =
+			UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+		utils.tweenService:Create(frame, TweenInfo.new(dragSpeed), { Position = position }):Play()
+	end
+
+	frame.InputBegan:Connect(function(input)
+		if
+			input.UserInputType == Enum.UserInputType.MouseButton1
+			or input.UserInputType == Enum.UserInputType.Touch
+		then
+			dragToggle = true
+			dragStart = input.Position
+			startPos = frame.Position
+			input.Changed:Connect(function()
+				if input.UserInputState == Enum.UserInputState.End then
+					dragToggle = false
+				end
+			end)
+		end
+	end)
+
+	utils.userInputService.InputChanged:Connect(function(input)
+		if
+			input.UserInputType == Enum.UserInputType.MouseMovement
+			or input.UserInputType == Enum.UserInputType.Touch
+		then
+			if dragToggle then
+				updateInput(input)
+			end
+		end
+	end)
+end
+
+local function moveToOptions()
+	gui.main.container:Destroy()
+
+	local tween = utils.tweenService:Create(gui.main, menuTween, { Size = UDim2.fromOffset(300, 200) })
+	tween:Play()
+
+	utils.create("Frame", {
+		className = "Frame",
+		Name = "container",
+		Size = UDim2.fromScale(0.95, 0.95),
+		BorderSizePixel = 0,
+		BackgroundTransparency = 1,
+		Position = UDim2.fromScale(0.5, 0.5),
+		AnchorPoint = Vector2.new(0.5, 0.5),
+		ZIndex = 2,
+		Parent = gui.main,
+
+		[1] = {
+			className = "TextLabel",
+			Name = "title",
+			FontFace = getFont(Enum.FontWeight.SemiBold),
+			BackgroundTransparency = 1,
+			BorderSizePixel = 0,
+			Size = UDim2.new(1, 0, 0, 35),
+			TextColor3 = Color3.fromRGB(223, 225, 229),
+			TextSize = 23,
+			Text = "Options",
+			ZIndex = 2,
+		},
+
+		[2] = {
+			className = "Frame",
+			Name = "container",
+			Size = UDim2.new(1, 0, 1, -70),
+			BorderSizePixel = 0,
+			BackgroundTransparency = 1,
+			AnchorPoint = Vector2.new(1, 1),
+			Position = UDim2.new(1, 0, 1, -35),
+			ZIndex = 2,
+
+			[1] = {
+				className = "ScrollingFrame",
+				Name = "scroll",
+				Size = UDim2.fromScale(0.95, 0.95),
+				AnchorPoint = Vector2.new(0.5, 0.5),
+				Position = UDim2.fromScale(0.5, 0.5),
+				BorderSizePixel = 0,
+				BackgroundColor3 = Color3.fromRGB(35, 36, 39),
+				ScrollBarThickness = 0,
+				AutomaticCanvasSize = Enum.AutomaticSize.Y,
+				CanvasSize = UDim2.new(1, 0, 0, 0),
+
+				[1] = {
+					className = "UICorner",
+					Name = "corner",
+					CornerRadius = UDim.new(0, 12),
+				},
+			},
+		},
+	})
+end
+
 UI.Init = function()
-	utils.create("ScreenGui", {
+	gui = utils.create("ScreenGui", {
 		Name = utils.httpService:GenerateGUID(false),
 		DisplayOrder = 100000,
 		IgnoreGuiInset = true,
@@ -145,10 +252,45 @@ UI.Init = function()
 						Image = "rbxassetid://109000112978694",
 						ZIndex = 2,
 					},
+
+					[6] = {
+						className = "ImageButton",
+						Name = "click",
+						BorderSizePixel = 0,
+						BackgroundTransparency = 1,
+						ImageTransparency = 1,
+						Size = UDim2.fromScale(1, 1),
+
+						Events = {
+							MouseEnter = function(self)
+								local tween = utils.tweenService:Create(
+									self.Parent,
+									defaultTween,
+									{ BackgroundColor3 = Color3.fromRGB(53, 55, 58) }
+								)
+								tween:Play()
+							end,
+
+							MouseLeave = function(self)
+								local tween = utils.tweenService:Create(
+									self.Parent,
+									defaultTween,
+									{ BackgroundColor3 = Color3.fromRGB(43, 45, 48) }
+								)
+								tween:Play()
+							end,
+
+							MouseButton1Click = function()
+								moveToOptions()
+							end,
+						},
+					},
 				},
 			},
 		},
 	})
+
+	dragify(gui.main)
 end
 
 return UI

@@ -152,7 +152,7 @@ elseif Subcommand == "bundle" then
         ["input"] = {"string", "default.project.json"},
         ["output"] = {"string", "Distribution/Script.luau"},
         ["minify"] = {"boolean", false},
-        ["env-name"] = {"string", "Wax Script"},
+        ["env-name"] = {"string", "server scanner"},
         ["darklua-config-path"] = {"string", "Build/DarkLua.json"},
         ["temp-dir-base"] = {"string", "Distribution"},
         ["extra-offset-lines"] = {"number", 0},

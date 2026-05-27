@@ -7,7 +7,7 @@ Scans the game to recreate the server hierarchy of the roblox game via methods a
 
 Will be reused and improved for [Onyx](https://github.com/sajicooltoday/onyx-suite)!
 
-- Minimalistic cli window ui
+- Sleek modern UI
 - File logging (.txt)
 - Optimized & speedy
   - optimized as much as it can but a bad device will probably cause problems

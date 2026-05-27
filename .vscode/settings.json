@@ -5,8 +5,8 @@
     "luau-lsp.types.definitionFiles": [".vscode/exploitTypes.d.luau"],
     "luau-lsp.types.robloxSecurityLevel": "RobloxScriptSecurity",
 
-    "luau-lsp.plugin.maximumRequestBodySize": "1gb",
-    "luau-lsp.plugin.enabled": true,
+    "luau-lsp.studioPlugin.maximumRequestBodySize": "1gb",
+    "luau-lsp.studioPlugin.enabled": true,
 
     "luau-lsp.diagnostics.strictDatamodelTypes": false,
     "luau-lsp.diagnostics.workspace": true,

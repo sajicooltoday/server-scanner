@@ -1,5 +1,5 @@
 {
-  "name": "your-project-name", 
+  "name": "server-scanner", 
   "tree": {
     "$path": "Src"
   }

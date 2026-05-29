@@ -1,8 +1,11 @@
-local utils = require(script.Utils)
-local ui = require(script.UI)
+local utils = script.Utils
+local ui = script.UI
 
-if not decompile then
-	utils.suncfail("decompile")
-end
+-- utility
+require(utils.Services)
+require(utils.Polyfill)
+require(utils.Log)
 
-ui.Init()
+-- user interface
+require(ui.Create)
+require(ui.Init)

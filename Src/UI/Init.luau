@@ -1,14 +1,12 @@
 local UI = {}
 
-local utils = require(script.Parent.Utils)
-local defaultFont = 12187365364
-local defaultTween = TweenInfo.new(0.25, Enum.EasingStyle.Exponential)
-local menuTween = TweenInfo.new(0.5, Enum.EasingStyle.Exponential)
+wax.shared.defaultFont = 12187365364
+wax.shared.defaultTween = TweenInfo.new(0.25, Enum.EasingStyle.Exponential)
 
-local gui = nil
+wax.shared.gui = nil
 
-local function getFont(weight: Enum.FontWeight)
-	return Font.fromId(defaultFont, weight, Enum.FontStyle.Normal)
+wax.shared.getFont = function(weight: Enum.FontWeight)
+	return Font.fromId(wax.shared.defaultFont, weight, Enum.FontStyle.Normal)
 end
 
 local function dragify(frame: Frame)
@@ -21,7 +19,7 @@ local function dragify(frame: Frame)
 		local delta = input.Position - dragStart
 		local position =
 			UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
-		utils.tweenService:Create(frame, TweenInfo.new(dragSpeed), { Position = position }):Play()
+		wax.shared.tweenService:Create(frame, TweenInfo.new(dragSpeed), { Position = position }):Play()
 	end
 
 	frame.InputBegan:Connect(function(input)
@@ -40,7 +38,7 @@ local function dragify(frame: Frame)
 		end
 	end)
 
-	utils.userInputService.InputChanged:Connect(function(input)
+	wax.shared.userInputService.InputChanged:Connect(function(input)
 		if
 			input.UserInputType == Enum.UserInputType.MouseMovement
 			or input.UserInputType == Enum.UserInputType.Touch
@@ -52,76 +50,14 @@ local function dragify(frame: Frame)
 	end)
 end
 
-local function moveToOptions()
-	gui.main.container:Destroy()
-
-	local tween = utils.tweenService:Create(gui.main, menuTween, { Size = UDim2.fromOffset(300, 200) })
-	tween:Play()
-
-	utils.create("Frame", {
-		className = "Frame",
-		Name = "container",
-		Size = UDim2.fromScale(0.95, 0.95),
-		BorderSizePixel = 0,
-		BackgroundTransparency = 1,
-		Position = UDim2.fromScale(0.5, 0.5),
-		AnchorPoint = Vector2.new(0.5, 0.5),
-		ZIndex = 2,
-		Parent = gui.main,
-
-		[1] = {
-			className = "TextLabel",
-			Name = "title",
-			FontFace = getFont(Enum.FontWeight.SemiBold),
-			BackgroundTransparency = 1,
-			BorderSizePixel = 0,
-			Size = UDim2.new(1, 0, 0, 35),
-			TextColor3 = Color3.fromRGB(223, 225, 229),
-			TextSize = 23,
-			Text = "Options",
-			ZIndex = 2,
-		},
-
-		[2] = {
-			className = "Frame",
-			Name = "container",
-			Size = UDim2.new(1, 0, 1, -70),
-			BorderSizePixel = 0,
-			BackgroundTransparency = 1,
-			AnchorPoint = Vector2.new(1, 1),
-			Position = UDim2.new(1, 0, 1, -35),
-			ZIndex = 2,
-
-			[1] = {
-				className = "ScrollingFrame",
-				Name = "scroll",
-				Size = UDim2.fromScale(0.95, 0.95),
-				AnchorPoint = Vector2.new(0.5, 0.5),
-				Position = UDim2.fromScale(0.5, 0.5),
-				BorderSizePixel = 0,
-				BackgroundColor3 = Color3.fromRGB(35, 36, 39),
-				ScrollBarThickness = 0,
-				AutomaticCanvasSize = Enum.AutomaticSize.Y,
-				CanvasSize = UDim2.new(1, 0, 0, 0),
-
-				[1] = {
-					className = "UICorner",
-					Name = "corner",
-					CornerRadius = UDim.new(0, 12),
-				},
-			},
-		},
-	})
-end
-
 UI.Init = function()
-	gui = utils.create("ScreenGui", {
-		Name = utils.httpService:GenerateGUID(false),
+	wax.shared.gui = wax.shared.create("ScreenGui", {
+		Name = wax.shared.httpService:GenerateGUID(false),
 		DisplayOrder = 100000,
 		IgnoreGuiInset = true,
 		ResetOnSpawn = false,
 		ZIndexBehavior = Enum.ZIndexBehavior.Global,
-		Parent = utils.gethui(),
+		Parent = wax.shared.gethui(),
 
 		[1] = {
 			className = "Frame",
@@ -160,7 +96,7 @@ UI.Init = function()
 				[1] = {
 					className = "TextLabel",
 					Name = "title",
-					FontFace = getFont(Enum.FontWeight.SemiBold),
+					FontFace = wax.shared.getFont(Enum.FontWeight.SemiBold),
 					BackgroundTransparency = 1,
 					BorderSizePixel = 0,
 					Size = UDim2.new(1, 0, 0, 35),
@@ -213,7 +149,7 @@ UI.Init = function()
 							Name = "text",
 							BorderSizePixel = 0,
 							BackgroundTransparency = 1,
-							FontFace = getFont(Enum.FontWeight.Medium),
+							FontFace = wax.shared.getFont(Enum.FontWeight.Medium),
 							Text = "Continue",
 							TextColor3 = Color3.fromRGB(142, 144, 147),
 							TextSize = 10,
@@ -263,25 +199,25 @@ UI.Init = function()
 
 						Events = {
 							MouseEnter = function(self)
-								local tween = utils.tweenService:Create(
+								local tween = wax.shared.tweenService:Create(
 									self.Parent,
-									defaultTween,
+									wax.shared.defaultTween,
 									{ BackgroundColor3 = Color3.fromRGB(53, 55, 58) }
 								)
 								tween:Play()
 							end,
 
 							MouseLeave = function(self)
-								local tween = utils.tweenService:Create(
+								local tween = wax.shared.tweenService:Create(
 									self.Parent,
-									defaultTween,
+									wax.shared.defaultTween,
 									{ BackgroundColor3 = Color3.fromRGB(43, 45, 48) }
 								)
 								tween:Play()
 							end,
 
 							MouseButton1Click = function()
-								moveToOptions()
+								require(script.Parent.Menu)
 							end,
 						},
 					},
@@ -290,7 +226,7 @@ UI.Init = function()
 		},
 	})
 
-	dragify(gui.main)
+	dragify(wax.shared.gui.main)
 end
 
 return UI

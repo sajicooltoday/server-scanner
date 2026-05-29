@@ -1,3 +1,6 @@
+--!nonstrict
+--!optimize 2
+
 --[[
     Server Scanner
     Luau roblox server scanner which can recreate the server hierarchy of a roblox game accurately

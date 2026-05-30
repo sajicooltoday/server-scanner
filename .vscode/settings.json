@@ -27,6 +27,8 @@
 
     "stylua.verify": true,
 
+    "liveServer.settings.port": 5501,
+
     "[luau]": {
         "editor.defaultFormatter": "JohnnyMorganz.stylua"
     },

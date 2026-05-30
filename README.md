@@ -26,10 +26,10 @@ Scans the game to recreate the server hierarchy of the roblox game via methods a
 ---
 
 - How to implement methods:
-  - add a .luau file to methods, prefer camelCase for naming
+  - add a .luau file to methods, prefer Pascal Case with spacing for naming for the UI
   - make sure it returns a table, the first argument `found: bool` will return wether the method found anything
   - the second argument `results: { string }` returns all the names or paths of the stuff it found, (if nothing found return a empty table)
-  - example: `table = { found = true, results = { "game.ServerScriptService.GameHandler" } }`
+  - example: `finishedtable = { found = true, results = { "game.ServerScriptService.GameHandler" } }`
   - this is done purely for logging, things like instance reconstruction and other logic is fully handled by the implemented method
   - add it to the readme and make it decently descriptive
 

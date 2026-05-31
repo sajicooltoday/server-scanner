@@ -122,12 +122,13 @@ wax.shared.create("Frame", {
 		[1] = {
 			className = "ScrollingFrame",
 			Name = "logs",
-			Size = UDim2.fromScale(0.95, 0.95),
+			Size = UDim2.fromScale(0.99, 0.99),
 			AnchorPoint = Vector2.new(0.5, 0.5),
 			Position = UDim2.fromScale(0.5, 0.5),
 			BorderSizePixel = 0,
 			BackgroundColor3 = Color3.fromRGB(35, 36, 39),
 			ScrollBarThickness = 0,
+			ScrollingDirection = Enum.ScrollingDirection.Y,
 			CanvasSize = UDim2.new(0, 0, 0, 0),
 			ZIndex = 2,
 
@@ -260,7 +261,7 @@ local tween = wax.shared.tweenService:Create(
 
 tween:Play()
 
-function scanner.start(selected: { string })
+function scanner.start(selected: { LuaSourceContainer })
 	local start = tick()
 	wax.shared.log("-------------------------------------------------------")
 	wax.shared.log("Starting Scan (may lag)...")
@@ -274,7 +275,6 @@ function scanner.start(selected: { string })
 
 	for i, v in pairs(selected) do
 		methods.runMethod(v)
-		task.wait(2.5)
 	end
 
 	local endtime = tick()

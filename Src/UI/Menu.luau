@@ -1,6 +1,11 @@
 wax.shared.gui.main.container:Destroy()
 
-local methods = {}
+local modules = script.Parent.Parent.Methods
+
+local methods = {
+	["Module Scan"] = modules.moduleScan,
+	["Remote Func Fuzz"] = modules.remoteFunctionFuzz,
+}
 
 wax.shared.create("Frame", {
 	Name = "container",
@@ -190,11 +195,7 @@ tween:Play()
 
 local selected = {}
 
-for i, v in pairs(script.Parent.Parent.Methods:GetChildren()) do
-	table.insert(methods, v.Name)
-end
-
-for i, method in pairs(methods) do
+for k, method in pairs(methods) do
 	task.spawn(function()
 		local toggle = false
 
@@ -284,7 +285,7 @@ for i, method in pairs(methods) do
 			[2] = {
 				className = "TextLabel",
 				Name = "title",
-				Text = method,
+				Text = k,
 				FontFace = wax.shared.getFont(Enum.FontWeight.Regular),
 				Size = UDim2.fromScale(1, 1),
 				AnchorPoint = Vector2.new(0.5, 0.5),

@@ -18,7 +18,7 @@ Scans the game to recreate the server hierarchy of the roblox game via methods a
   - scans every module script in the game to find server references (such as game.ServerScriptService.ExampleScript in the module script)
   - reason: many modern games have module scripts inside of replicated storage or somewhere that is supposed to be required on the server, and leaks script locations/paths
 
-- remotefunctionFuzz (method)
+- remoteFunctionFuzz (method)
   - fuzzes every remote function in the game with random meaningless arguments and catch any error it returns (the error will contain the script path and it will be extracted with xpcall)
   - reason: almost every stable game uses remote functions that are avaliable to the client, fuzzing them for error script paths can recreate alot of scripts
 

@@ -1,15 +1,22 @@
 local Methods = {}
 
-local methodsFolder = script.Parent.Parent.Methods
+local firstrun = true
 
-Methods.runMethod = function(method: string)
-	wax.shared.log([[Starting method: "]] .. method .. [["]])
+Methods.runMethod = function(method: LuaSourceContainer)
+	if not firstrun then
+		firstrun = false
+		wax.shared.log("")
+	end
+
+	firstrun = false
+
+	wax.shared.log([[Starting method: "]] .. method.Name .. [["]])
 	wax.shared.log("")
-	local run = require(methodsFolder:FindFirstChild(method))
+	local run = require(method)
 
 	if run.found == nil or run.found ~= true then
-		wax.shared.log("Method (" .. method .. ") found nothing")
 		wax.shared.log("")
+		wax.shared.log("Method (" .. method.Name .. ") found nothing")
 
 		return
 	end

@@ -1,4 +1,4 @@
-local UI = {}
+local ui = {}
 
 wax.shared.defaultFont = 12187365364
 wax.shared.defaultTween = TweenInfo.new(0.25, Enum.EasingStyle.Exponential)
@@ -228,4 +228,4 @@ wax.shared.gui = wax.shared.create("ScreenGui", {
 
 dragify(wax.shared.gui.main)
 
-return UI
+return ui

@@ -159,6 +159,7 @@ elseif Subcommand == "bundle" then
         ["ci-mode"] = {"boolean", false},
         ["verbose"] = {"boolean", true},
         ["header"] = {"string", nil}
+        ,["ender"] = {"string", nil}
     }, UsageMessage)
 
     local Verbose = Options["verbose"]
@@ -166,6 +167,7 @@ elseif Subcommand == "bundle" then
 
     local Minify = Options["minify"]
     local Header = Options['header']
+    local Ender = Options['ender']
     local EnvName = Options["env-name"]
 
     if not CIMode then
@@ -176,6 +178,12 @@ elseif Subcommand == "bundle" then
         Header = fs.readFile(Header)
     else
         Header = false
+    end
+
+    if Ender and fs.isFile(Ender) then
+        Ender = fs.readFile(Ender)
+    else
+        Ender = false
     end
 
     local function RunIfVerbose(f, ...)
@@ -460,6 +468,10 @@ elseif Subcommand == "bundle" then
 
     if Header then
         fs.writeFile(Output, `{Header}\n\n{fs.readFile(Output)}`)
+    end
+
+    if Ender then
+        fs.writeFile(Output, `{fs.readFile(Output)}\n{Ender}`)
     end
 
     -- We're now completely finished!

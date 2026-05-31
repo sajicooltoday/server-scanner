@@ -31,10 +31,11 @@
 			"type": "shell",
 			"command": "lune",
 			"args": [
-				"run", 
-				"Build", 
-				"bundle", 
-				"header=Build/Header.luau"
+				"run",
+				"Build",
+				"bundle",
+				"header=Build/Header.luau",
+				"ender=Build/Ender.luau"
 			],
 			"group": {
 				"kind": "build",

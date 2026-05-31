@@ -1,5 +1,8 @@
 # Server Scanner
 
+> [!WARNING]
+> This is provided for pentesting on your own game, i am not responsible for what you do with this.
+
 > [!IMPORTANT]
 > Script is discontinued due to me working on other projects and i cant maintain like 500 things so yea. fork, modify, edit, use for your own projects, just give credits to me (pull requests are still open, so thats why this is not just a public archive)
 

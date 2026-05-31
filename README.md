@@ -3,6 +3,10 @@
 > [!IMPORTANT]
 > Script is discontinued due to me working on other projects and i cant maintain like 500 things so yea. fork, modify, edit, use for your own projects, just give credits to me (pull requests are still open, so thats why this is not just a public archive)
 
+```luau
+loadstring(game:HttpGet("https://github.com/sajicooltoday/server-scanner/releases/latest/download/Script.luau"))()
+```
+
 Scans the game to recreate the server hierarchy of the roblox game via methods and recreates the hierarchy with Instance new so you can view the found stuff in any explorer or log to a file
 
 - Clean/Sleek Modern UI

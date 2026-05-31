@@ -1,5 +1,8 @@
 # Server Scanner
 
+> [!WARNING]
+> This is provided for pentesting on your own game, i am not responsible for what you do with this.
+
 > [!IMPORTANT]
 > Script is discontinued due to me working on other projects and i cant maintain like 500 things so yea. fork, modify, edit, use for your own projects, just give credits to me (pull requests are still open, so thats why this is not just a public archive)
 
@@ -29,7 +32,7 @@ Scans the game to recreate the server hierarchy of the roblox game via methods a
 ---
 
 - How to implement methods:
-  - add a .luau file to methods, prefer Pascal Case with spacing for naming for the UI
+  - add a .luau file to methods.
   - make sure it returns a table, the first argument `found: bool` will return wether the method found anything
   - the second argument `results: { string }` returns all the names or paths of the stuff it found, (if nothing found return a empty table)
   - example: `finishedtable = { found = true, results = { "game.ServerScriptService.GameHandler" } }`

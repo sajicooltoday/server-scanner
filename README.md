@@ -5,11 +5,10 @@
 
 Scans the game to recreate the server hierarchy of the roblox game via methods and recreates the hierarchy with Instance new so you can view the found stuff in any explorer or log to a file
 
-- Clean UI
-- File logging (.txt)
+- Clean/Sleek Modern UI
 - Optimized & speedy
   - optimized as much as it can but a bad device will probably cause problems
-  - usually fast process for good devices (can take a while, thats why file logging exists)
+  - usually fast process for good devices
 - Methods
   - methods can be easily plugged in & out for modification
 

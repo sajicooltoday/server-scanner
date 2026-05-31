@@ -10,7 +10,8 @@ local skip = {
 	"CoreGui",
 }
 
--- simple modulescan implementation using pattern matching and decompilation
+-- simple (not really, making the patterns and fixing the bugs took forever) modulescan implementation using pattern matching and decompilation
+-- might be missing some patterns or some might be useless or there might be optimization bugs (pull request if u find any)
 
 local function findServerLinks(script: LocalScript | ModuleScript): { string }
 	local source = decompile(script)
@@ -25,6 +26,7 @@ local function findServerLinks(script: LocalScript | ModuleScript): { string }
 
 	local function push(svc, chain)
 		local path = "game." .. svc .. "." .. chain
+
 		if not seen[path] then
 			seen[path] = true
 			table.insert(results, path)
@@ -165,6 +167,7 @@ local function reconstruct(paths: { string })
 
 	for _, path in ipairs(paths) do
 		local parts = path:split(".")
+
 		for i = 2, #parts - 1 do
 			isPrefix[table.concat(parts, ".", 1, i)] = true
 		end
@@ -180,12 +183,15 @@ local function reconstruct(paths: { string })
 
 	local function guessLeaf(name, rootService)
 		local lower = name:lower()
+
 		if isAllCaps(name) or lower:find("module") or lower:find("service") then
 			return "ModuleScript"
 		end
+
 		if rootService == "ServerStorage" then
 			return "ModuleScript"
 		end
+
 		return "Script"
 	end
 
@@ -195,6 +201,7 @@ local function reconstruct(paths: { string })
 		if done[path] then
 			continue
 		end
+
 		done[path] = true
 
 		local parts = path:split(".")
@@ -210,14 +217,17 @@ local function reconstruct(paths: { string })
 			else
 				local subPath = table.concat(parts, ".", 1, i)
 				local kind
+
 				if i < #parts or isPrefix[subPath] or endsWithS(name) then
 					kind = "Folder"
 				else
 					kind = guessLeaf(name, rootService)
 				end
+
 				local inst = Instance.new(kind)
 				inst.Name = name
 				inst.Parent = current
+
 				current = inst
 			end
 		end
@@ -233,16 +243,15 @@ for i, v in pairs(game:GetChildren()) do
 
 	local descendants = v:GetDescendants()
 
-	for i, descendant in pairs(descendants) do
-		-- i know its called modulescan but every script that we can access the bytecode on the client is better
-		if descendant:IsA("LuaSourceContainer") then
-			if descendant.ClassName == "Script" then
-				if descendant.RunContext ~= Enum.RunContext.Client then
+	for i, v in pairs(descendants) do
+		if v:IsA("LuaSourceContainer") then -- i know its called modulescan but every script that we can access the bytecode on the client is better
+			if v.ClassName == "Script" then
+				if v.RunContext ~= Enum.RunContext.Client then
 					continue
 				end
 			end
 
-			local paths = findServerLinks(descendant)
+			local paths = findServerLinks(v)
 
 			for i, path in paths do
 				table.insert(found, path)
